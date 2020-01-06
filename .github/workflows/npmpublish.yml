@@ -25,6 +25,6 @@ jobs:
           registry-url: https://npm.pkg.github.com/
           scope: '@zipfund'
       - run: yarn install --frozen-lockfile
-      - run: yarn publish
+      - run: yarn publish --access public
         env:
           NODE_AUTH_TOKEN: ${{secrets.PACKAGE_ACCESS_TOKEN}}
