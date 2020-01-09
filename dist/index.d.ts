@@ -2,5 +2,5 @@
 interface IProps {
     text: string;
 }
-export declare const HelloWorld: (props: IProps) => JSX.Element;
-export default HelloWorld;
+declare const App: (props: IProps) => JSX.Element;
+export default App;

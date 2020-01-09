@@ -6,13 +6,12 @@ function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'defau
 
 var React = _interopDefault(require('react'));
 
-const HelloWorld = (props) => {
+const App = (props) => {
     const { text } = props;
     return React.createElement("div", null,
         "Hello world ",
         text);
 };
 
-exports.HelloWorld = HelloWorld;
-exports.default = HelloWorld;
+exports.default = App;
 //# sourceMappingURL=index.js.map
