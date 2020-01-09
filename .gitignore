@@ -113,5 +113,3 @@ tests/
 .tests/
 build/
 .build/
-dist/
-.dist/
