@@ -1,6 +1,6 @@
 {
   "name": "@zipfund/react-crud-table",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "main": "dist/index.js",
   "module": "dist/index.es.js",
   "types": "dist/types/index.d.ts",
@@ -9,7 +9,7 @@
   ],
   "scripts": {
     "test": "jest",
-    "start": "node index.js",
+    "start": "node dist/index.js",
     "build": "rollup -c",
     "build:types": "tsc --emitDeclarationOnly"
   },

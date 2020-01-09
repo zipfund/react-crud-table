@@ -1,2 +1,1 @@
-/// <reference types="react" />
-export declare const BasicTable: (url: string, columns: any[]) => JSX.Element;
+export declare const BasicTable: any;
