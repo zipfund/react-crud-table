@@ -27,16 +27,19 @@ const App = (props: IProps) => {
 
   const datas = [
     {
-      key: 'test_column',
-      value: '1'
+      test_column: '1',
+      test_column2: '2',
+      test_column3: '3'
     },
     {
-      key: 'test_column2',
-      value: '2'
+      test_column: '4',
+      test_column2: '5',
+      test_column3: '6'
     },
     {
-      key: 'test_column3',
-      value: '3'
+      test_column: '7',
+      test_column2: '8',
+      test_column3: '9'
     },
   ]
   return (

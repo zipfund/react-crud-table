@@ -8,6 +8,6 @@ test("HelloWorld component test", () => {
 
   expect(testInstance.findByType(HelloWorld).props.text).toBe("!!")
 
-  let tree = component.toJSON()
-  expect(tree).toMatchSnapshot()
+  // let tree = component.toJSON()
+  // expect(tree).toMatchSnapshot()
 })

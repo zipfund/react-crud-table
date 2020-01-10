@@ -8,18 +8,23 @@ var React = _interopDefault(require('react'));
 var antd = require('antd');
 
 const BasicTable = (props) => {
-    // axiosApi(url)
-    //   .then(({ data }) => {
-    //
-    //   })
     // TODO: columns props로 받아야됨 -> columns : { labels: [], values: {}(default String), valueType: '' }
     // columns -> title: column.label[0~n], dataIndex: columns.value[0~n], key: columns.values[0~n], width ?, align ?
     // dataSource -> { `${data.key}`: data.value, key: `${data.key}_index` }
     const { url, columns, datas } = props;
     console.log('url : ', url);
-    const tableColumns = columns.map(ele => { return { title: ele.label, dataIndex: ele.value, key: ele.value }; });
-    const tableDatas = datas.map((ele, idx) => { return { [ele.key]: ele.value, key: `${ele.key}_${idx}` }; });
-    return (React.createElement(antd.Table, { columns: tableColumns, dataSource: tableDatas }));
+    const tableColumns = columns.map(ele => { return Object.assign({ title: ele.label, dataIndex: ele.value, key: ele.value }, ele); });
+    const tableDatas = datas.map((ele, idx) => {
+        let returnData = {};
+        for (let key in ele) {
+            if (ele.hasOwnProperty(key)) {
+                returnData = Object.assign(Object.assign({}, returnData), { [key]: ele[key] });
+            }
+        }
+        returnData = Object.assign(Object.assign({}, returnData), { number: idx + 1 });
+        return returnData;
+    });
+    return (React.createElement(antd.Table, { columns: tableColumns, dataSource: tableDatas, rowKey: record => record.uid }));
 };
 
 const App = (props) => {
@@ -43,16 +48,19 @@ const App = (props) => {
     ];
     const datas = [
         {
-            key: 'test_column',
-            value: '1'
+            test_column: '1',
+            test_column2: '2',
+            test_column3: '3'
         },
         {
-            key: 'test_column2',
-            value: '2'
+            test_column: '4',
+            test_column2: '5',
+            test_column3: '6'
         },
         {
-            key: 'test_column3',
-            value: '3'
+            test_column: '7',
+            test_column2: '8',
+            test_column3: '9'
         },
     ];
     return (React.createElement("div", null,
