@@ -11,7 +11,7 @@ export const BasicTable: any = (props: { url: string, columns: Array<{ label: st
   const { url, columns, datas } = props
   console.log('url : ', url)
 
-  const tableColumns: ColumnProps<any>[] = columns.map(ele => { return { title: ele.label, dataIndex: ele.value, key: ele.value, ...ele } })
+  const tableColumns: ColumnProps<any>[] = columns.map(ele => { return { title: ele.label, dataIndex: ele.value, key: ele.value, align: 'center', ...ele } })
   const tableDatas: Array<any> = datas.map((ele, idx) => {
     let returnData: object = {}
     for (let key in ele) {
