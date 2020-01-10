@@ -1,6 +1,5 @@
 /// <reference types="react" />
 interface IProps {
-    text: string;
     columns: Array<{
         label: string;
         value: string;
