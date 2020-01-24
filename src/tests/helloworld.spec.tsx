@@ -37,10 +37,10 @@ test("HelloWorld component test", () => {
       test_column3: '9'
     },
   ]
-  const component = renderer.create(<HelloWorld text="!!" columns={columns} datas={datas}/>)
+  const component = renderer.create(<HelloWorld columns={columns} datas={datas}/>)
   const testInstance = component.root
 
-  expect(testInstance.findByType(HelloWorld).props.text).toBe("!!")
+  expect(testInstance.findByType(HelloWorld).props.datas).toBe(datas)
 
   // let tree = component.toJSON()
   // expect(tree).toMatchSnapshot()
