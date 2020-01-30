@@ -18,11 +18,13 @@ export const BasicTable: React.FC<BasicTableProps> = ( props ) => {
   // TODO: columns -> title: column.label[0~n], dataIndex: columns.value[0~n], key: columns.values[0~n], width ?, align ?
   // TODO: dataSource -> { `${data.key}`: data.value, key: `${data.key}_index` }
   const { url, columns, datas, numbering = true, ...rest } = props
-  const tableColumns: ColumnProps<any>[] = []
-  columns.map(el => {
-    tableColumns.push({ title: el.label, dataIndex: el.value, key: el.value, align: 'center' })
+  const tableColumns: ColumnProps<any>[] = columns.map(el => {
+    return { title: el.label, dataIndex: el.value, key: el.value, align: 'center', ...el }
   })
-  console.log(tableColumns)
+  // const tableColumns: ColumnProps<any>[] = []
+  // columns.map(el => {
+  //   tableColumns.push({ title: el.label, dataIndex: el.value, key: el.value, align: 'center' })
+  // })
   // const tableColumns: ColumnProps<any>[] = useLocalStore(() => columns.map(el => {
   //   return { title: el.label, dataIndex: el.value, key: el.value, align: 'center' }
   // }))
@@ -37,8 +39,9 @@ export const BasicTable: React.FC<BasicTableProps> = ( props ) => {
         </Popconfirm>
       ) : null
   })
-  const dataSources: Array<any> = []
-  datas.map((ele, idx) => {
+  console.log(tableColumns)
+
+  const dataSources: Array<any> = datas.map((ele, idx) => {
     let returnData: object = {}
     for (let key in ele) {
       if (ele.hasOwnProperty(key)) {
@@ -53,8 +56,28 @@ export const BasicTable: React.FC<BasicTableProps> = ( props ) => {
       ...returnData,
       remove: '삭제'
     }
-    dataSources.push(returnData)
+    return returnData
   })
+  console.log(dataSources)
+
+  // const dataSources: Array<any> = []
+  // datas.map((ele, idx) => {
+  //   let returnData: object = {}
+  //   for (let key in ele) {
+  //     if (ele.hasOwnProperty(key)) {
+  //       returnData = {
+  //         ...returnData,
+  //         [key]: ele[key]
+  //       }
+  //     }
+  //   }
+  //   returnData = {
+  //     number: idx + 1,
+  //     ...returnData,
+  //     remove: '삭제'
+  //   }
+  //   dataSources.push(returnData)
+  // })
 
   // const dataSources: Array<any> = useLocalStore(() =>  datas.map((ele, idx) => {
   //   let returnData: object = {}
@@ -74,18 +97,6 @@ export const BasicTable: React.FC<BasicTableProps> = ( props ) => {
   //   return returnData
   // }))
 
-  // const tableColumns: ColumnProps<any>[] = columns.map(el => {
-  //   return { title: el.label, dataIndex: el.value, key: el.value, align: 'center', ...el }
-  // })
-  // tableColumns.push({title: '삭제', dataIndex: 'remove', key: 'remove',
-  //   render: (text, record) =>
-  //     tableDatas.length >= 1 ? (
-  //       <Popconfirm title="정말 삭제하시겠습니까?" onConfirm={() => handleDelete(record.key)}>
-  //         <a>{ text }</a>
-  //       </Popconfirm>
-  //     ) : null,key:
-  // })
-
   console.log('tableColumns after : ', tableColumns[0].title)
 
   const handleDelete = (key: any) => {
@@ -93,24 +104,6 @@ export const BasicTable: React.FC<BasicTableProps> = ( props ) => {
     // const dataSource = [...this.state.dataSource];
     // this.setState({ dataSource: dataSource.filter(item => item.key !== key) });
   }
-
-  // const tableDatas: Array<any> = datas.map((ele, idx) => {
-  //   let returnData: object = {}
-  //   for (let key in ele) {
-  //     if (ele.hasOwnProperty(key)) {
-  //       returnData = {
-  //         ...returnData,
-  //         [key]: ele[key]
-  //       }
-  //     }
-  //   }
-  //   returnData = {
-  //     number: idx + 1,
-  //     ...returnData,
-  //     remove: '삭제'
-  //   }
-  //   return returnData
-  // })
 
   return useObserver(() =>
     <Table columns={tableColumns} dataSource={dataSources} rowKey={record => record.uid} { ...rest } />
