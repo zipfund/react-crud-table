@@ -57,9 +57,9 @@ export const BasicTable: React.FC<BasicTableProps> = ( props ) => {
   //     ) : null,key:
   // })
   if(numbering) {
-    tableColumns.push({ title: 'N', dataIndex: 'number', key: 'number', align: 'center' })
+    tableColumns.unshift({ title: 'N', dataIndex: 'number', key: 'number', align: 'center' })
   }
-  dataSources.push({title: '삭제', dataIndex: 'remove', key: 'remove',
+  tableColumns.push({title: '삭제', dataIndex: 'remove', key: 'remove',
     render: (text: any, record: any) =>
       dataSources.length >= 1 ? (
         <Popconfirm title="정말 삭제하시겠습니까?" onConfirm={() => handleDelete(record.key)}>
