@@ -22,6 +22,17 @@ export const BasicTable: React.FC<BasicTableProps> = ( props ) => {
   const tableColumns: ColumnProps<any>[] = useLocalStore(() => columns.map(el => {
     return { title: el.label, dataIndex: el.value, key: el.value, align: 'center' }
   }))
+  if(numbering) {
+    tableColumns.unshift({ title: 'N', dataIndex: 'number', key: 'number', align: 'center' })
+  }
+  tableColumns.push({title: '삭제', dataIndex: 'remove', key: 'remove',
+    render: (text: any, record: any) =>
+      dataSources.length >= 1 ? (
+        <Popconfirm title="정말 삭제하시겠습니까?" onConfirm={() => handleDelete(record.key)}>
+          <a>{ text }</a>
+        </Popconfirm>
+      ) : null
+  })
   const dataSources: Array<any> = useLocalStore(() =>  datas.map((ele, idx) => {
     let returnData: object = {}
     for (let key in ele) {
@@ -39,12 +50,6 @@ export const BasicTable: React.FC<BasicTableProps> = ( props ) => {
     }
     return returnData
   }))
-
-  console.log('dataSources : ', dataSources)
-  console.log('dataSources length : ', dataSources.length)
-  console.log('tableColumns : ', tableColumns)
-  console.log('tableColumns length : ', tableColumns.length)
-
   // const tableColumns: ColumnProps<any>[] = columns.map(el => {
   //   return { title: el.label, dataIndex: el.value, key: el.value, align: 'center', ...el }
   // })
@@ -56,18 +61,8 @@ export const BasicTable: React.FC<BasicTableProps> = ( props ) => {
   //       </Popconfirm>
   //     ) : null,key:
   // })
-  if(numbering) {
-    tableColumns.unshift({ title: 'N', dataIndex: 'number', key: 'number', align: 'center' })
-  }
-  tableColumns.push({title: '삭제', dataIndex: 'remove', key: 'remove',
-    render: (text: any, record: any) =>
-      dataSources.length >= 1 ? (
-        <Popconfirm title="정말 삭제하시겠습니까?" onConfirm={() => handleDelete(record.key)}>
-          <a>{ text }</a>
-        </Popconfirm>
-      ) : null
-  })
-  console.log('tableColumns after : ', tableColumns)
+
+  console.log('tableColumns after : ', tableColumns[0].title)
 
   const handleDelete = (key: any) => {
     dataSources.filter(item => item.key !== key)
@@ -93,7 +88,7 @@ export const BasicTable: React.FC<BasicTableProps> = ( props ) => {
   //   return returnData
   // })
 
-  return useObserver(() => (
+  return useObserver(() =>
     <Table columns={tableColumns} dataSource={dataSources} rowKey={record => record.uid} { ...rest } />
-  ))
+  )
 }

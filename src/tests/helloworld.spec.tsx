@@ -39,6 +39,8 @@ test("HelloWorld component test", () => {
   ]
   const component = renderer.create(<HelloWorld columns={columns} datas={datas}/>)
   const testInstance = component.root
+  console.log(component.toTree())
+  console.log(testInstance.findByType(HelloWorld).children)
 
   expect(testInstance.findByType(HelloWorld).props.datas).toBe(datas)
 
