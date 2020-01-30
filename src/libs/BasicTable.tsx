@@ -1,7 +1,10 @@
 import React from 'react'
 // import axiosApi from '../utils/axios'
-import { Table } from 'antd'
+import { Popconfirm, Table } from 'antd'
 import { ColumnProps } from 'antd/es/table'
+import { useObserver, useLocalStore } from 'mobx-react-lite'
+// import { observable, computed, action } from 'mobx'
+
 
 interface BasicTableProps {
   url?: string,
@@ -16,12 +19,10 @@ export const BasicTable: React.FC<BasicTableProps> = ( props ) => {
   // TODO: columns -> title: column.label[0~n], dataIndex: columns.value[0~n], key: columns.values[0~n], width ?, align ?
   // TODO: dataSource -> { `${data.key}`: data.value, key: `${data.key}_index` }
   const { url, columns, datas, numbering = true, ...rest } = props
-  console.log('url : ', url)
-
-  const tableColumns: ColumnProps<any>[] = columns.map(el => { return { title: el.label, dataIndex: el.value, key: el.value, align: 'center', ...el } })
-  tableColumns.push({title: 'N', dataIndex: 'number', key: 'number'})
-
-  const tableDatas: Array<any> = datas.map((ele, idx) => {
+  const tableColumns: ColumnProps<any>[] = useLocalStore(() => columns.map(el => {
+    return { title: el.label, dataIndex: el.value, key: el.value, align: 'center' }
+  }))
+  const dataSources: Array<any> = useLocalStore(() =>  datas.map((ele, idx) => {
     let returnData: object = {}
     for (let key in ele) {
       if (ele.hasOwnProperty(key)) {
@@ -33,12 +34,66 @@ export const BasicTable: React.FC<BasicTableProps> = ( props ) => {
     }
     returnData = {
       number: idx + 1,
-      ...returnData
+      ...returnData,
+      remove: '삭제'
     }
     return returnData
-  })
+  }))
 
-  return (
-    <Table columns={tableColumns} dataSource={tableDatas} rowKey={record => record.uid} { ...rest } />
-  )
+  console.log('dataSources : ', dataSources)
+  console.log('dataSources length : ', dataSources.length)
+  console.log('tableColumns : ', tableColumns)
+  console.log('tableColumns length : ', tableColumns.length)
+
+  // const tableColumns: ColumnProps<any>[] = columns.map(el => {
+  //   return { title: el.label, dataIndex: el.value, key: el.value, align: 'center', ...el }
+  // })
+  // tableColumns.push({title: '삭제', dataIndex: 'remove', key: 'remove',
+  //   render: (text, record) =>
+  //     tableDatas.length >= 1 ? (
+  //       <Popconfirm title="정말 삭제하시겠습니까?" onConfirm={() => handleDelete(record.key)}>
+  //         <a>{ text }</a>
+  //       </Popconfirm>
+  //     ) : null,key:
+  // })
+  if(numbering) {
+    tableColumns.push({ title: 'N', dataIndex: 'number', key: 'number', align: 'center' })
+  }
+  dataSources.push({title: '삭제', dataIndex: 'remove', key: 'remove',
+    render: (text: any, record: any) =>
+      dataSources.length >= 1 ? (
+        <Popconfirm title="정말 삭제하시겠습니까?" onConfirm={() => handleDelete(record.key)}>
+          <a>{ text }</a>
+        </Popconfirm>
+      ) : null
+  })
+  console.log('tableColumns after : ', tableColumns)
+
+  const handleDelete = (key: any) => {
+    dataSources.filter(item => item.key !== key)
+    // const dataSource = [...this.state.dataSource];
+    // this.setState({ dataSource: dataSource.filter(item => item.key !== key) });
+  }
+
+  // const tableDatas: Array<any> = datas.map((ele, idx) => {
+  //   let returnData: object = {}
+  //   for (let key in ele) {
+  //     if (ele.hasOwnProperty(key)) {
+  //       returnData = {
+  //         ...returnData,
+  //         [key]: ele[key]
+  //       }
+  //     }
+  //   }
+  //   returnData = {
+  //     number: idx + 1,
+  //     ...returnData,
+  //     remove: '삭제'
+  //   }
+  //   return returnData
+  // })
+
+  return useObserver(() => (
+    <Table columns={tableColumns} dataSource={dataSources} rowKey={record => record.uid} { ...rest } />
+  ))
 }

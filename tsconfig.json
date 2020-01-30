@@ -21,6 +21,7 @@
     "noImplicitThis": true,                   /* Raise error on 'this' expressions with an implied 'any' type. */
     "noImplicitAny": true,                    /* Raise error on expressions and declarations with an implied 'any' type. */
     "suppressImplicitAnyIndexErrors": true,
+    "experimentalDecorators": true,           /* Use Decorator */
 
     "esModuleInterop": true,                  /* Enables emit interoperability between CommonJS and ES Modules via creation of namespace objects for all imports. Implies 'allowSyntheticDefaultImports'. */
 
