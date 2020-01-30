@@ -2,8 +2,7 @@ import React from 'react'
 // import axiosApi from '../utils/axios'
 import { Popconfirm, Table } from 'antd'
 import { ColumnProps } from 'antd/es/table'
-import { useObserver, useLocalStore } from 'mobx-react-lite'
-// import { observable, computed, action } from 'mobx'
+import { useObserver } from 'mobx-react-lite'
 
 
 interface BasicTableProps {
@@ -19,11 +18,11 @@ export const BasicTable: React.FC<BasicTableProps> = ( props ) => {
   // TODO: columns -> title: column.label[0~n], dataIndex: columns.value[0~n], key: columns.values[0~n], width ?, align ?
   // TODO: dataSource -> { `${data.key}`: data.value, key: `${data.key}_index` }
   const { url, columns, datas, numbering = true, ...rest } = props
-  const tableColumns: ColumnProps<any>[] = useLocalStore(() => [])
+  const tableColumns: ColumnProps<any>[] = []
   columns.map(el => {
     tableColumns.push({ title: el.label, dataIndex: el.value, key: el.value, align: 'center' })
   })
-
+  console.log(tableColumns)
   // const tableColumns: ColumnProps<any>[] = useLocalStore(() => columns.map(el => {
   //   return { title: el.label, dataIndex: el.value, key: el.value, align: 'center' }
   // }))
@@ -38,7 +37,7 @@ export const BasicTable: React.FC<BasicTableProps> = ( props ) => {
         </Popconfirm>
       ) : null
   })
-  const dataSources: Array<any> = useLocalStore(() => [])
+  const dataSources: Array<any> = []
   datas.map((ele, idx) => {
     let returnData: object = {}
     for (let key in ele) {
