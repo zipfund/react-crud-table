@@ -1,6 +1,6 @@
 {
   "name": "@zipfund/react-crud-table",
-  "version": "0.0.21",
+  "version": "0.0.22",
   "main": "dist/index.js",
   "module": "dist/index.es.js",
   "types": "dist/types/index.d.ts",

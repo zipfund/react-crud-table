@@ -21,7 +21,6 @@ export const BasicTable: React.FC<BasicTableProps> = observer(( props ) => {
   const tableColumns: ColumnProps<any>[] = columns.map(el => {
     return { title: el.label, dataIndex: el.value, key: el.value, align: 'center', ...el }
   })
-
   if(numbering) {
     tableColumns.unshift({ title: 'N', dataIndex: 'number', key: 'number', align: 'center' })
   }
@@ -53,13 +52,13 @@ export const BasicTable: React.FC<BasicTableProps> = observer(( props ) => {
   })
 
 
-  const store = useLocalStore(() => ({
+  const store = useLocalStore((source) => ({
     tableColumns: tableColumns,
-    dataSources: dataSources,
+    dataSources: source.dataSources,
     deleteData(key: any) {
-      store.dataSources = store.dataSources.filter(item => item.key !== key)
+      store.dataSources = store.dataSources.filter((item: any) => item.key !== key)
     }
-  }))
+  }), { dataSources })
   console.log('tableColumns', tableColumns)
   console.log('store.tableColumns', store.tableColumns)
 
@@ -90,6 +89,7 @@ export const BasicTable: React.FC<BasicTableProps> = observer(( props ) => {
   //   }
   //   return returnData
   // }))
+
 
   return (
     <Table columns={store.tableColumns} dataSource={store.dataSources} rowKey={record => record.uid} { ...rest } />
