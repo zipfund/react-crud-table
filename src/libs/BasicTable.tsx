@@ -2,7 +2,7 @@ import React from 'react'
 // import axiosApi from '../utils/axios'
 import { Popconfirm, Table } from 'antd'
 import { ColumnProps } from 'antd/es/table'
-import { useObserver, useLocalStore } from 'mobx-react-lite'
+import { useLocalStore, observer } from 'mobx-react-lite'
 
 
 interface BasicTableProps {
@@ -12,7 +12,7 @@ interface BasicTableProps {
   numbering?: boolean
 }
 
-export const BasicTable: React.FC<BasicTableProps> = ( props ) => {
+export const BasicTable: React.FC<BasicTableProps> = observer(( props ) => {
 
   // TODO: columns props로 받아야됨 -> columns : { labels: [], values: {}(default String), valueType: '' }
   // TODO: columns -> title: column.label[0~n], dataIndex: columns.value[0~n], key: columns.values[0~n], width ?, align ?
@@ -91,7 +91,7 @@ export const BasicTable: React.FC<BasicTableProps> = ( props ) => {
   //   return returnData
   // }))
 
-  return useObserver(() =>
+  return (
     <Table columns={store.tableColumns} dataSource={store.dataSources} rowKey={record => record.uid} { ...rest } />
   )
-}
+})
