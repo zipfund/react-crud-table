@@ -2,7 +2,7 @@ import React from 'react'
 // import axiosApi from '../utils/axios'
 import { Popconfirm, Table } from 'antd'
 import { ColumnProps } from 'antd/es/table'
-import { useObserver } from 'mobx-react-lite'
+import { useObserver, useLocalStore } from 'mobx-react-lite'
 
 
 interface BasicTableProps {
@@ -21,25 +21,18 @@ export const BasicTable: React.FC<BasicTableProps> = ( props ) => {
   const tableColumns: ColumnProps<any>[] = columns.map(el => {
     return { title: el.label, dataIndex: el.value, key: el.value, align: 'center', ...el }
   })
-  // const tableColumns: ColumnProps<any>[] = []
-  // columns.map(el => {
-  //   tableColumns.push({ title: el.label, dataIndex: el.value, key: el.value, align: 'center' })
-  // })
-  // const tableColumns: ColumnProps<any>[] = useLocalStore(() => columns.map(el => {
-  //   return { title: el.label, dataIndex: el.value, key: el.value, align: 'center' }
-  // }))
+
   if(numbering) {
     tableColumns.unshift({ title: 'N', dataIndex: 'number', key: 'number', align: 'center' })
   }
   tableColumns.push({title: '삭제', dataIndex: 'remove', key: 'remove',
     render: (text: any, record: any) =>
       dataSources.length >= 1 ? (
-        <Popconfirm title="정말 삭제하시겠습니까?" onConfirm={() => handleDelete(record.key)}>
+        <Popconfirm title="정말 삭제하시겠습니까?" onConfirm={() => store.deleteData(record.key)}>
           <a>{ text }</a>
         </Popconfirm>
       ) : null
   })
-  console.log(tableColumns)
 
   const dataSources: Array<any> = datas.map((ele, idx) => {
     let returnData: object = {}
@@ -58,26 +51,27 @@ export const BasicTable: React.FC<BasicTableProps> = ( props ) => {
     }
     return returnData
   })
-  console.log(dataSources)
 
-  // const dataSources: Array<any> = []
-  // datas.map((ele, idx) => {
-  //   let returnData: object = {}
-  //   for (let key in ele) {
-  //     if (ele.hasOwnProperty(key)) {
-  //       returnData = {
-  //         ...returnData,
-  //         [key]: ele[key]
-  //       }
-  //     }
-  //   }
-  //   returnData = {
-  //     number: idx + 1,
-  //     ...returnData,
-  //     remove: '삭제'
-  //   }
-  //   dataSources.push(returnData)
+
+  const store = useLocalStore(() => ({
+    tableColumns: tableColumns,
+    dataSources: dataSources,
+    deleteData(key: any) {
+      store.dataSources = store.dataSources.filter(item => item.key !== key)
+    }
+  }))
+  console.log('tableColumns', tableColumns)
+  console.log('store.tableColumns', store.tableColumns)
+
+  console.log('dataSources', dataSources)
+  console.log('store.dataSources', store.dataSources)
+  // const tableColumns: ColumnProps<any>[] = []
+  // columns.map(el => {
+  //   tableColumns.push({ title: el.label, dataIndex: el.value, key: el.value, align: 'center' })
   // })
+  // const tableColumns: ColumnProps<any>[] = useLocalStore(() => columns.map(el => {
+  //   return { title: el.label, dataIndex: el.value, key: el.value, align: 'center' }
+  // }))
 
   // const dataSources: Array<any> = useLocalStore(() =>  datas.map((ele, idx) => {
   //   let returnData: object = {}
@@ -97,15 +91,7 @@ export const BasicTable: React.FC<BasicTableProps> = ( props ) => {
   //   return returnData
   // }))
 
-  console.log('tableColumns after : ', tableColumns[0].title)
-
-  const handleDelete = (key: any) => {
-    dataSources.filter(item => item.key !== key)
-    // const dataSource = [...this.state.dataSource];
-    // this.setState({ dataSource: dataSource.filter(item => item.key !== key) });
-  }
-
   return useObserver(() =>
-    <Table columns={tableColumns} dataSource={dataSources} rowKey={record => record.uid} { ...rest } />
+    <Table columns={store.tableColumns} dataSource={store.dataSources} rowKey={record => record.uid} { ...rest } />
   )
 }
