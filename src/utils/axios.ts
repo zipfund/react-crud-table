@@ -8,6 +8,7 @@ export type Method =
   | 'post' | 'POST'
   | 'put' | 'PUT'
   | 'patch' | 'PATCH'
+  | 'update' | 'UPDATE'
 
 export const axiosApi = (url: string, method: Method = 'GET', data: any, options: any) => {
   data = method.toUpperCase() === 'GET' ? { params: {...data} } : { data }

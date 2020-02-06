@@ -28,7 +28,7 @@ export default {
     resolve({ extensions }),                  // node_modules 에서 모듈을 불러올 수 있게 해줌. ts/tsx 파일도 불러올 수 있게 해줌
     typescript({
       rollupCommonJSResolveHack: true,
-      exclude: "**/__tests__/**",
+      exclude: ["**/__tests__/**", "test.tsx"],
       clean: true
     }),
     commonjs({                                // CommonJS 형태로 만들어진 모듈도 불러와서 사용 할 수 있게 해줌.

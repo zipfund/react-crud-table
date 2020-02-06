@@ -1,5 +1,6 @@
 import React from 'react'
-import { BasicTable } from './libs/BasicTable'
+import { BasicTable } from './views/BasicTable'
+import 'antd/dist/antd.css'
 
 interface IProps {
   columns: Array<{ label: string, value: string, key: string }>,

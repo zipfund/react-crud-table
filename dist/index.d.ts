@@ -1,4 +1,5 @@
 /// <reference types="react" />
+import 'antd/dist/antd.css';
 interface IProps {
     columns: Array<{
         label: string;
