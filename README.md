@@ -1,4 +1,4 @@
-React-CRUD-Table
+React-CRUD-CRUDTable
 ===
 CRUD 기능이 내포된 리액트 컴포넌트입니다.
 

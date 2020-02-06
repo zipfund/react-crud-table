@@ -1,21 +1,18 @@
 import React from 'react'
-import { BasicTable } from './views/BasicTable'
-import 'antd/dist/antd.css'
+import CRUDTable from './CRUDTable'
 
 interface IProps {
   columns: Array<{ label: string, value: string, key: string }>,
-  datas: Array<any>
+  data: Array<any>
 }
 
 const App = (props: IProps) => {
-  const { columns, datas, ...rest } = props
+  const { columns, data } = props
 
   return (
-    <BasicTable
-      url={'https://test.url'}
+    <CRUDTable
       columns={columns}
-      datas={datas}
-      { ...rest }
+      data={data}
     />
   )
 }

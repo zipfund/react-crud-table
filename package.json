@@ -10,7 +10,7 @@
   "scripts": {
     "test": "jest",
     "start": "node dist/index.js",
-    "start:dev": "cross-env PORT=3131 NODE_ENV=development webpack-dev-server --mode development --open --hot src/test.tsx",
+    "start:dev": "cross-env PORT=3131 NODE_ENV=development webpack-dev-server --mode development --open --hot src/tests/test.tsx",
     "build": "rollup -c",
     "build:types": "tsc --emitDeclarationOnly"
   },
@@ -30,7 +30,8 @@
     "axios": "^0.19.0",
     "cross-env": "^7.0.0",
     "mobx": "^5.15.3",
-    "mobx-react-lite": "^1.5.2"
+    "mobx-react-lite": "^1.5.2",
+    "rand-token": "^0.4.0"
   },
   "eslintConfig": {
     "extends": "react-app"
