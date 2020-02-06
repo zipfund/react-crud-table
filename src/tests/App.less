@@ -1,0 +1,31 @@
+.table {
+  margin: 12px 20px;
+  thead > tr {
+    & > th {
+      background: #eaeeef;
+      border-top: 1px solid #ced3d6;
+      border-bottom: 1px solid #ced3d6;
+      padding: 5px 16px;
+      text-align: center;
+      &:first-child {
+        border-left: 1px solid #ced3d6;
+      }
+      &:last-child {
+        border-right: 1px solid #ced3d6;
+      }
+    }
+  }
+  tbody > tr {
+    background: #fff;
+    & > td {
+      padding: 5px 16px;
+      text-align: center;
+      &:first-child {
+        border-left: 1px solid #ced3d6;
+      }
+      &:last-child {
+        border-right: 1px solid #ced3d6;
+      }
+    }
+  }
+}

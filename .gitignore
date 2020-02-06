@@ -108,7 +108,5 @@ typings/
 idea/
 
 # outputs
-tests/
-.tests/
 build/
 .build/
