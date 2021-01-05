@@ -27,7 +27,7 @@
   },
   "dependencies": {
     "antd": "^3.26.6",
-    "axios": "^0.19.0",
+    "axios": "^0.21.1",
     "cross-env": "^7.0.0",
     "mobx": "^5.15.3",
     "mobx-react-lite": "^1.5.2"
